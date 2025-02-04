@@ -112,5 +112,3 @@ function deletebyname(name) {
     })
 }
 
-// the call of the new person
-newperson()
