@@ -1,18 +1,18 @@
 const mongoose = require('mongoose')
-const person = require('./P_model/person')
+const Person = require('./P_model/person')
 
 //mongodb atlas connection uri
-const uri = 'mongodb+srv://hafsaelkhattabi:hafssa1213@cluster0.k7zrt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const uri = 'mongodb+srv://hafsaelkhattabi:hafssa1213@cluster0.k7zrt.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0'
 
 // connect to mongodb
-mongoose.connect('uri', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(uri)
     .then(() => console.log('connected to mongodb'))
     .catch(err => console.error('mongodb not connected :',err))
 
 // create and save a new person
 
 function newperson() {
-    var newperson = new person({
+    var newperson = new Person({
         name: 'hafsa',
         age: 22,
         favoriteFoods: ['pastilla', 'couscous']
@@ -32,7 +32,7 @@ function manypeople() {
         { name: 'sara', age: 23, favoriteFoods: ['rafissa', 'payla']}
     ]
 
-    person.create(arr, function (err, save) {
+    Person.create(arr, function (err, save) {
         if (err) { console.error(err)}
         else { console.log('people saved successfuly:', save)}
     })
@@ -41,7 +41,7 @@ function manypeople() {
 // find people by name
 
 function findpeople(name) {
-    person.find({ name: name}, function (err, find) {
+    Person.find({ name: name}, function (err, find) {
         if (err) { console.error(err)}
         else { console.log('the random people found:', find)}
     })
@@ -50,7 +50,7 @@ function findpeople(name) {
 // find one person by favorite food
 
 function findbyfood(food) {
-    person.findOne({ favoriteFoods: food }, function (err, find) {
+    Person.findOne({ favoriteFoods: food }, function (err, find) {
         if (err) { console.error(err)}
         else { console.log('the random people found:', find)}
     })
@@ -59,7 +59,7 @@ function findbyfood(food) {
 // find by ID
 
 function findbyid(id) {
-    person.findById(id, function (err, save) {
+    Person.findById(id, function (err, save) {
         if (err) { console.error(err)}
         else { console.log('the random people found:', find)}
     })
@@ -68,11 +68,11 @@ function findbyid(id) {
 // update a person's favorite foods
 
 function updatebyid(id) {
-    person.findById(id, function (err, save) {
+    Person.findById(id, function (err, save) {
         if (err) { console.error(err)}
         else { 
-            person.favoriteFoods.push('pizza')
-            person.save(function (err, update) {
+            Person.favoriteFoods.push('pizza')
+            Person.save(function (err, update) {
                if (err) { console.error(err)}
                else {console.log('the person food updated:', update)}
             })
@@ -83,7 +83,7 @@ function updatebyid(id) {
 // find and update a person by name
 
 function updatebyname(name) {
-    person.findOneAndUpdate(
+    Person.findOneAndUpdate(
         { name: name },
         { age: 15},
         { new: true },
@@ -97,7 +97,7 @@ function updatebyname(name) {
 // delete a person by id
 
 function deletebyid(id) {
-    person.findByIdAndDelete(id, function (err, remove) {
+    Person.findByIdAndDelete(id, function (err, remove) {
         if (err) { console.error(err)}
         else {console.log('the person deleted:', remove)}
     })
@@ -106,7 +106,7 @@ function deletebyid(id) {
 // delete multiple people by name
 
 function deletebyname(name) {
-    person.deleteMany({ name: name}, function (err, remove) {
+    Person.deleteMany({ name: name}, function (err, remove) {
         if (err) { console.error(err)}
         else {console.log('the people removed:', remove)}
     })
